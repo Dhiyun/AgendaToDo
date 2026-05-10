@@ -1,11 +1,7 @@
 import { Stack } from "expo-router";
-
-import { useEffect } from 'react';
-
-import {
-  initDatabase,
-  seedDatabase,
-} from '../database/database';
+import { useEffect } from "react";
+import { AppProvider } from "../context/AppContext";
+import { initDatabase, seedDatabase, resetDatabase } from "../database/database";
 
 export default function RootLayout() {
   // return <Stack />;
@@ -23,13 +19,23 @@ export default function RootLayout() {
 
   }, []);
 
+  // useEffect(() => {
+  //   const setup = async () => {
+
+  //     await resetDatabase();
+  //   };
+  //   setup();
+  // }, []);
+
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name='(tabs)/_layout' />
-    </Stack>
+    <AppProvider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        {/* <Stack.Screen name='(tabs)/_layout' /> */}
+      </Stack>
+    </AppProvider>
   )
 }

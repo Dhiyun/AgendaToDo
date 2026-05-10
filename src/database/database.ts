@@ -4,6 +4,17 @@ export const db = SQLite.openDatabaseSync(
     'agenda_nusantara.db'
 );
 
+export const resetDatabase = async () => {
+
+    await db.execAsync(`
+        DROP TABLE IF EXISTS tasks;
+    `);
+
+    await db.execAsync(`
+        DROP TABLE IF EXISTS users;
+    `);
+};
+
 export const initDatabase = async () => {
     // Enable foreign key
     await db.execAsync(`
@@ -40,20 +51,43 @@ export const initDatabase = async () => {
   `);
 };
 
+export const loginUser = async (
+    username: string,
+    password: string
+) => {
+
+    const user =
+        await db.getFirstAsync<{
+            id: number;
+            username: string;
+        }>(
+            `
+                SELECT id, username
+                FROM users
+
+                WHERE username = ?
+                AND password = ?
+            `,
+            [username, password]
+        );
+        
+    return user;
+};
+
 export const seedDatabase = async () => {
-    // cek apakah user admin sudah ada
+    // cek apakah user sudah ada
     const user = await db.getFirstAsync(
         `
             SELECT * FROM users
             WHERE username = ?
         `,
-        ['admin']
+        ['user']
     );
 
     // kalau sudah ada jangan insert lagi
     if (user) return;
 
-    // insert user admin
+    // insert user
     await db.runAsync(
         `
             INSERT INTO users
@@ -66,8 +100,8 @@ export const seedDatabase = async () => {
             VALUES (?, ?, ?)
         `,
         [
-            'admin',
-            'admin',
+            'user',
+            'user',
             new Date().toISOString(),
         ]
     );
@@ -125,34 +159,67 @@ export const seedDatabase = async () => {
     );
 };
 
-export const getCompletedTasksCount = async () => {
-    const result =
-        await db.getFirstAsync<{
-            total: number;
-        }>(
-            `
-                SELECT COUNT(*) as total
-                FROM tasks
-
-                WHERE is_completed = 1
-            `
-        );
-
-    return result?.total ?? 0;
+export const getTasks = async (user_id: number) => {
+    const tasks = await db.getAllAsync(
+        `
+            SELECT * FROM tasks
+            WHERE user_id = ?
+            ORDER BY created_at DESC
+        `,
+        [user_id]
+    );
+    
+    return tasks;
 };
 
-export const getPendingTasksCount = async () => {
-    const result =
-        await db.getFirstAsync<{
-            total: number;
-        }>(
-            `
-                SELECT COUNT(*) as total
-                FROM tasks
-
-                WHERE is_completed = 0
-            `
-        );
-
-    return result?.total ?? 0;
+export const createTask = async ({
+    user_id,
+    title,
+    description,
+    due_date,
+    category,
+}: {
+    user_id: number;
+    title: string;
+    description: string;
+    due_date: string;
+    category: 'penting' | 'biasa';
+}) => {
+    await db.runAsync(
+        `
+            INSERT INTO tasks
+            (
+                user_id,
+                title,
+                description,
+                due_date,
+                category,
+                is_completed,
+                created_at
+            )
+            VALUES (?, ?, ?, ?, ?, 0, ?)
+        `,
+        [user_id, title, description, due_date, category, new Date().toISOString()]
+    );
 };
+
+export const toggleTaskStatus = async (id: number, status: number) => {
+    await db.runAsync(
+        `
+            UPDATE tasks
+            SET is_completed = ?
+            WHERE id = ?
+        `,
+        [status, id]
+    );
+};
+
+export const deleteTask = async (id: number) => {
+    await db.runAsync(
+        `
+            DELETE FROM tasks
+            WHERE id = ?
+        `,
+        [id]
+    );
+}

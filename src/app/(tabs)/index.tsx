@@ -1,8 +1,4 @@
 import {
-  useEffect,
-  useState
-} from 'react';
-import {
   View,
   Text,
   ScrollView,
@@ -13,10 +9,8 @@ import { globalStyles, navButtonStyles, berandaStyles } from '../../styles/globa
 import { Colors } from '../../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import {
-  getCompletedTasksCount,
-  getPendingTasksCount,
-} from '../../database/database';
+import { useMemo } from 'react';
+import { useApp } from '../../context/AppContext';
 
 interface NavButtonProps {
   icon: React.ComponentProps<typeof Ionicons>['name'];
@@ -42,24 +36,15 @@ function NavButton({ icon, label, color, bgColor, onPress }: NavButtonProps) {
 }
 
 export default function HomeScreen() {
-  const [completed, setCompleted] =
-    useState(0);
+  const { user, tasks } = useApp();
 
-  const [pending, setPending] =
-    useState(0);
+  const totalSelesai = useMemo(() => {
+    return tasks.filter(task => Number(task.is_completed) === 1).length;
+  }, [tasks]);
 
-  useEffect(() => {
-    const loadData = async () => {
-      const selesai = await getCompletedTasksCount();
-      const belum = await getPendingTasksCount();
-      
-      setCompleted(selesai);
-      setPending(belum);
-    };
-
-    loadData();
-
-  }, []);
+  const totalBelum = useMemo(() => {
+    return tasks.filter(task => Number(task.is_completed) === 0).length;
+  }, [tasks]);
 
   return (
     <SafeAreaView style={globalStyles.container}>
@@ -71,7 +56,7 @@ export default function HomeScreen() {
         {/* Header */}
         <View style={{ marginBottom: 24 }}>
           <Text style={globalStyles.title}>
-            Agenda Nusantara 👋
+            Agenda Nusantara, {user?.username ?? ' '} 👋
           </Text>
 
           <Text style={globalStyles.subtitle}>
@@ -114,7 +99,7 @@ export default function HomeScreen() {
                 },
               ]}
             >
-              {completed}
+              {totalSelesai}
             </Text>
           </View>
 
@@ -143,7 +128,7 @@ export default function HomeScreen() {
                 },
               ]}
             >
-              {pending}
+              {totalBelum}
             </Text>
           </View>
         </View>
