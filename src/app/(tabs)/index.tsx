@@ -1,4 +1,8 @@
 import {
+  useEffect,
+  useState
+} from 'react';
+import {
   View,
   Text,
   ScrollView,
@@ -9,6 +13,10 @@ import { globalStyles, navButtonStyles, berandaStyles } from '../../styles/globa
 import { Colors } from '../../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import {
+  getCompletedTasksCount,
+  getPendingTasksCount,
+} from '../../database/database';
 
 interface NavButtonProps {
   icon: React.ComponentProps<typeof Ionicons>['name'];
@@ -34,6 +42,25 @@ function NavButton({ icon, label, color, bgColor, onPress }: NavButtonProps) {
 }
 
 export default function HomeScreen() {
+  const [completed, setCompleted] =
+    useState(0);
+
+  const [pending, setPending] =
+    useState(0);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const selesai = await getCompletedTasksCount();
+      const belum = await getPendingTasksCount();
+      
+      setCompleted(selesai);
+      setPending(belum);
+    };
+
+    loadData();
+
+  }, []);
+
   return (
     <SafeAreaView style={globalStyles.container}>
       <ScrollView
@@ -87,7 +114,7 @@ export default function HomeScreen() {
                 },
               ]}
             >
-              12
+              {completed}
             </Text>
           </View>
 
@@ -116,7 +143,7 @@ export default function HomeScreen() {
                 },
               ]}
             >
-              5
+              {pending}
             </Text>
           </View>
         </View>
@@ -138,7 +165,7 @@ export default function HomeScreen() {
           </Text>
         </View>
 
-        <Text style={[berandaStyles.sectionTitle, { paddingHorizontal: 4, marginTop: 8 }]}>
+        <Text style={[berandaStyles.sectionTitle, { paddingHorizontal: 4, marginTop: 12 }]}>
           MENU UTAMA
         </Text>
         <View style={berandaStyles.navGrid}>
