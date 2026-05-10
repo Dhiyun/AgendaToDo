@@ -2,13 +2,36 @@ import {
   View,
   Text,
   ScrollView,
+  TouchableOpacity
 } from 'react-native';
-
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-import { globalStyles } from '../../styles/global';
-
+import { globalStyles, navButtonStyles, berandaStyles } from '../../styles/global';
 import { Colors } from '../../constants/Colors';
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+
+interface NavButtonProps {
+  icon: React.ComponentProps<typeof Ionicons>['name'];
+  label: string;
+  color: string;
+  bgColor: string;
+  onPress: () => void;
+}
+
+function NavButton({ icon, label, color, bgColor, onPress }: NavButtonProps) {
+  return (
+    <TouchableOpacity
+      style={[navButtonStyles.button, { borderColor: color + '30' }]}
+      onPress={onPress}
+      activeOpacity={0.8}
+    >
+      <View style={[navButtonStyles.iconWrap, { backgroundColor: bgColor }]}>
+        <Ionicons name={icon} size={28} color={color} />
+      </View>
+      <Text style={navButtonStyles.label}>{label}</Text>
+    </TouchableOpacity>
+  );
+}
 
 export default function HomeScreen() {
   return (
@@ -113,6 +136,26 @@ export default function HomeScreen() {
           <Text style={globalStyles.subtitle}>
             Tambah dan kelola tugasmu
           </Text>
+        </View>
+
+        <Text style={[berandaStyles.sectionTitle, { paddingHorizontal: 4, marginTop: 8 }]}>
+          MENU UTAMA
+        </Text>
+        <View style={berandaStyles.navGrid}>
+          <NavButton
+            icon="add-circle"
+            label="Tambah Tugas Penting"
+            color={Colors.penting}
+            bgColor={Colors.pentingLight}
+            onPress={() => router.push('/tambah-tugas-penting')}
+          />
+          <NavButton
+            icon="add-circle"
+            label="Tambah Tugas Biasa"
+            color={Colors.biasa}
+            bgColor={Colors.biasaLight}
+            onPress={() => router.push('/tambah-tugas-biasa')}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
