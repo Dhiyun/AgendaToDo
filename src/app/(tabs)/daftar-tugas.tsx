@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useApp, Task } from '../../context/AppContext';
+import { useApp } from '../../context/AppContext';
 import { globalStyles } from '../../styles/global';
 import { Colors } from '../../constants/Colors';
 import { useState, useMemo } from 'react';
@@ -35,13 +35,28 @@ export default function DaftarTugasScreen() {
     const [activeFilter, setActiveFilter] = useState<FilterType>('semua');
 
     const filteredTasks = useMemo(() => {
+        let filtered = [...tasks];
+
         switch (activeFilter) {
-            case 'penting': return tasks.filter(t => t.category === 'penting');
-            case 'biasa': return tasks.filter(t => t.category === 'biasa');
-            case 'selesai': return tasks.filter(t => t.is_completed === 1);
-            case 'belum': return tasks.filter(t => t.is_completed === 0);
-            default: return tasks;
+            case 'penting':
+                filtered = filtered.filter(t => t.category === 'penting');
+                break;
+            case 'biasa':
+                filtered = filtered.filter(t => t.category === 'biasa');
+                break;
+            case 'selesai':
+                filtered = filtered.filter(t => t.is_completed === 1);
+                break;
+            case 'belum':
+                filtered = filtered.filter(t => t.is_completed === 0);
+                break;
         }
+
+        filtered.sort((a, b) => {
+            return a.is_completed - b.is_completed;
+        });
+
+        return filtered;
     }, [tasks, activeFilter]);
 
     return (
@@ -128,7 +143,7 @@ export default function DaftarTugasScreen() {
                                 globalStyles.card,
                                 {
                                     borderLeftWidth: 5,
-                                    borderLeftColor: isSelesai ? '#10B981' : mainColor,
+                                    borderLeftColor: isSelesai ? '#000000' : mainColor,
                                     opacity: isSelesai ? 0.75 : 1,
                                 }
                             ]}>
@@ -174,7 +189,7 @@ export default function DaftarTugasScreen() {
                                         <Ionicons
                                             name={isSelesai ? 'checkmark-circle' : 'ellipse-outline'}
                                             size={30}
-                                            color={isSelesai ? '#10B981' : mainColor}
+                                            color={isSelesai ? '#000000' : mainColor}
                                         />
                                     </TouchableOpacity>
                                 </View>

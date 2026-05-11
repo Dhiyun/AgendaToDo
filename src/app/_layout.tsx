@@ -3,29 +3,16 @@ import { useEffect } from "react";
 import { AppProvider } from "../context/AppContext";
 import { initDatabase, seedDatabase, resetDatabase } from "../database/database";
 
+
 export default function RootLayout() {
-  // return <Stack />;
-
   useEffect(() => {
-
     const setup = async () => {
-
       await initDatabase();
-
       await seedDatabase();
+      // await resetDatabase();
     };
-
     setup();
-
   }, []);
-
-  // useEffect(() => {
-  //   const setup = async () => {
-
-  //     await resetDatabase();
-  //   };
-  //   setup();
-  // }, []);
 
   return (
     <AppProvider>

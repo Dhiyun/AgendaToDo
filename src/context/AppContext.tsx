@@ -5,13 +5,14 @@ import {
     useEffect,
     ReactNode,
 } from 'react';
-
+import { router } from 'expo-router';
 import {
     loginUser,
     getTasks,
     createTask,
     toggleTaskStatus,
-    deleteTask as deleteTaskDB
+    deleteTask as deleteTaskDB,
+    changePassword as changePasswordDB
 } from '../database/database';
 
 export type TaskCategory = 'penting' | 'biasa';
@@ -25,6 +26,7 @@ export interface Task {
     category: TaskCategory;
     is_completed: number;
     created_at: string;
+    updated_at: string;
 }
 
 interface User {
@@ -55,6 +57,10 @@ interface AppContextType {
 
     toggleTask: (id: number, status: number) => Promise<void>;
     deleteTask: (id: number) => Promise<void>;
+    changePassword: (
+        currentPassword: string,
+        newPassword: string
+    ) => Promise<boolean>;
 }
 
 const AppContext =
@@ -80,6 +86,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setUser(null);
 
         setTasks([]);
+
+        router.replace('/login');
     };
 
     const fetchTasks = async () => {
@@ -124,6 +132,22 @@ export function AppProvider({ children }: { children: ReactNode }) {
         await fetchTasks();
     }
 
+    const changePassword = async (
+        currentPassword: string,
+        newPassword: string
+    ) => {
+
+        if (!user) return false;
+
+        const result = await changePasswordDB({
+            user_id: user.id,
+            currentPassword,
+            newPassword,
+        });
+
+        return result;
+    };
+
     useEffect(() => {
         const load = async () => {
             if (!user) return;
@@ -145,6 +169,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
                 addTask,
                 toggleTask,
                 deleteTask,
+                changePassword,
             }}
         >
             {children}

@@ -18,6 +18,7 @@ export const Colors = {
   text: '#0F172A',
   textMuted: '#64748B',
   textLight: '#94A3B8',
+  textDev: '#12233a',
 
   // Border
   border: '#E2E8F0',
