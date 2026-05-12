@@ -1,28 +1,28 @@
-# Agenda Nusantara 📋
+# Agenda Nusantara
 
 Aplikasi manajemen tugas harian berbasis React Native dengan Expo, menggunakan SQLite sebagai penyimpanan lokal. Aplikasi ini dirancang untuk membantu pengguna mengelola tugas penting dan biasa dengan antarmuka yang modern, bersih, dan intuitif.
 
 ---
 
-## 📸 Pratinjau Layar (Screenshots)
+## Pratinjau Layar (Screenshots)
 
 Berikut adalah tampilan antarmuka dari aplikasi Agenda Nusantara:
 
 <div align="center">
-  <img src="./assets/screenshot/Login.jpg" width="200" alt="Halaman Login" />
-  <img src="./assets/screenshot/Beranda.jpg" width="200" alt="Halaman Beranda" />
-  <img src="./assets/screenshot/Daftar List.jpg" width="200" alt="Halaman Daftar Tugas" />
-  <img src="./assets/screenshot/Setelan.jpg" width="200" alt="Halaman Pengaturan" />
+  <img src="./assets/screenshots/Login.jpg" width="200" alt="Halaman Login" />
+  <img src="./assets/screenshots/Beranda.jpg" width="200" alt="Halaman Beranda" />
+  <img src="./assets/screenshots/Daftar List.jpg" width="200" alt="Halaman Daftar Tugas" />
+  <img src="./assets/screenshots/Setelan.jpg" width="200" alt="Halaman Pengaturan" />
 </div>
 <br>
 <div align="center">
-  <img src="./assets/screenshot/Add Tugas Penting.jpg" width="200" alt="Halaman Tambah Tugas Penting" />
-  <img src="./assets/screenshot/Add Tugas Biasa.jpg" width="200" alt="Halaman Tambah Tugas Biasa" />
+  <img src="./assets/screenshots/Add Tugas Penting.jpg" width="200" alt="Halaman Tambah Tugas Penting" />
+  <img src="./assets/screenshots/Add Tugas Biasa.jpg" width="200" alt="Halaman Tambah Tugas Biasa" />
 </div>
 
 ---
 
-## ✨ Fitur Utama
+## Fitur Utama
 
 Aplikasi ini dilengkapi dengan berbagai fitur fungsional untuk menunjang produktivitas:
 
@@ -46,7 +46,7 @@ Aplikasi ini dilengkapi dengan berbagai fitur fungsional untuk menunjang produkt
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
+## Teknologi yang Digunakan
 
 * [React Native](https://reactnative.dev/) — *Framework* UI utama
 * [Expo](https://expo.dev/) + [Expo Router](https://docs.expo.dev/router/introduction/) — *Tooling* & Navigasi berbasis file
@@ -56,7 +56,7 @@ Aplikasi ini dilengkapi dengan berbagai fitur fungsional untuk menunjang produkt
 
 ---
 
-## ⚙️ Prasyarat
+## Prasyarat
 
 Sebelum memulai, pastikan perangkatmu sudah ter-install perangkat lunak berikut:
 
