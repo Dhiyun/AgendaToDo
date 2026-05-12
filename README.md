@@ -1,50 +1,68 @@
-# Welcome to your Expo app 👋
+# Agenda Nusantara 📋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplikasi manajemen tugas harian berbasis React Native dengan Expo, menggunakan SQLite sebagai penyimpanan lokal. Aplikasi ini dirancang untuk membantu pengguna mengelola tugas penting dan biasa dengan antarmuka yang modern, bersih, dan intuitif.
 
-## Get started
+---
 
-1. Install dependencies
+## 📸 Pratinjau Layar (Screenshots)
 
-   ```bash
-   npm install
-   ```
+Berikut adalah tampilan antarmuka dari aplikasi Agenda Nusantara:
 
-2. Start the app
+<div align="center">
+  <img src="./assets/screenshot/Login.jpg" width="200" alt="Halaman Login" />
+  <img src="./assets/screenshot/Beranda.jpg" width="200" alt="Halaman Beranda" />
+  <img src="./assets/screenshot/Daftar List.jpg" width="200" alt="Halaman Daftar Tugas" />
+  <img src="./assets/screenshot/Setelan.jpg" width="200" alt="Halaman Pengaturan" />
+</div>
+<br>
+<div align="center">
+  <img src="./assets/screenshot/Add Tugas Penting.jpg" width="200" alt="Halaman Tambah Tugas Penting" />
+  <img src="./assets/screenshot/Add Tugas Biasa.jpg" width="200" alt="Halaman Tambah Tugas Biasa" />
+</div>
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## ✨ Fitur Utama
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Aplikasi ini dilengkapi dengan berbagai fitur fungsional untuk menunjang produktivitas:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+* **Autentikasi Pengguna:** Sistem *Login* sederhana untuk keamanan akses data.
+* **Dashboard Interaktif (Beranda):**
+    * Menampilkan sapaan untuk *user* yang sedang aktif.
+    * Kartu statistik jumlah **Tugas Selesai** dan **Belum Selesai**.
+    * Visualisasi **Grafik Batang (Bar Chart)** yang menunjukkan tren penyelesaian tugas per hari.
+* **Manajemen Tugas (CRUD):**
+    * Menambahkan **Tugas Penting** (dengan tema warna merah).
+    * Menambahkan **Tugas Biasa** (dengan tema warna hijau).
+    * Setiap tugas dilengkapi dengan *Judul*, *Deskripsi*, dan *Tenggat Waktu (Deadline)*.
+* **Daftar Tugas & Filter (Daftar List):**
+    * Sistem *tab bar* untuk memfilter tugas berdasarkan kategori: **Semua**, **Penting**, dan **Biasa**.
+    * Fitur *Checklist* untuk menandai tugas yang sudah selesai (teks akan dicoret otomatis).
+    * Fitur Hapus (ikon tempat sampah) untuk membuang tugas dari *database*.
+* **Pengaturan Akun & Profil:**
+    * Formulir untuk mengubah *password* pengguna.
+    * Tampilan profil *developer* aplikasi.
+    * Fitur *Logout* untuk keluar dari sesi.
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## 🛠️ Teknologi yang Digunakan
 
-```bash
-npm run reset-project
-```
+* [React Native](https://reactnative.dev/) — *Framework* UI utama
+* [Expo](https://expo.dev/) + [Expo Router](https://docs.expo.dev/router/introduction/) — *Tooling* & Navigasi berbasis file
+* [expo-sqlite](https://docs.expo.dev/versions/latest/sdk/sqlite/) — Manajemen *database* lokal langsung di perangkat
+* [expo-safe-area-context](https://docs.expo.dev/versions/latest/sdk/safe-area-context/) — Penyesuaian *layout* untuk *notch*/*status bar*
+* [TypeScript](https://www.typescriptlang.org/) — Pengetikan statis untuk kode yang lebih aman
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## ⚙️ Prasyarat
 
-To learn more about developing your project with Expo, look at the following resources:
+Sebelum memulai, pastikan perangkatmu sudah ter-install perangkat lunak berikut:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+* [Node.js](https://nodejs.org/) (versi 18 atau lebih baru)
+* [npm](https://www.npmjs.com/) atau [yarn](https://yarnpkg.com/)
+* [Expo Go](https://expo.dev/go) di HP (untuk *testing* langsung di perangkat fisik)
+* [Android Studio](https://developer.android.com/studio) (Opsional, jika ingin menggunakan emulator PC)
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
